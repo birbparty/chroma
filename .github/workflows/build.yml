@@ -23,3 +23,5 @@ jobs:
           cd ..
           nimby install -g "${{ github.event.repository.name }}/${{ github.event.repository.name }}.nimble"
       - run: nim r tests/tests.nim
+      - name: Zero-dependency colortypes guard
+        run: nim r tests/zerodep.nim

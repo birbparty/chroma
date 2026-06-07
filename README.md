@@ -11,6 +11,28 @@
 
 This library has no dependencies other than the Nim standard library.
 
+## Zero-dependency color surface
+
+For embedded and portable consumers that only need the color types and
+constructors, `import chroma/colortypes` is a narrow entry point that goes a step
+further than the line above: it pulls **no part of the standard library at all**
+and **none** of the CSS color-name table, HTML parsing, or color-space
+conversions. It gives you the color types (`Color`, `ColorRGBA`, `ColorRGBX`, ...)
+and the primitive constructors (`color`, `rgb`, `rgba`, `rgbx`, ...):
+
+```nim
+import chroma/colortypes
+
+let c = rgbx(255, 128, 0, 255)
+echo c.r, " ", c.g, " ", c.b, " ", c.a
+```
+
+This module is import-free, and that property is regression-guarded in CI
+(`tests/zerodep.nim`). chroma is pure Nim with no SIMD, file IO, or threads, which
+makes it a known-good portable target (32-bit ARM / ARMv6k devkitARM such as the
+Nintendo 3DS, and other newlib homebrew targets). For the full parse / format /
+convert API, use `import chroma` as shown below — it is unchanged.
+
 ## About
 
 This library works with colors and color spaces.
