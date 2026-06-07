@@ -1,3 +1,29 @@
+##
+## **Zero-dependency color surface.**
+##
+## `import chroma/colortypes` is a deliberately narrow entry point that provides
+## the color *types* (`Color`, `ColorRGB`, `ColorRGBA`, `ColorRGBX`, `ColorHSL`,
+## `ColorHSV`, ...) and the primitive constructors (`color`, `rgb`, `rgba`,
+## `rgbx`, `hsl`, ...) **without** pulling the CSS color-name table (`names`),
+## HTML parsing, `std/tables`, `std/strutils`, or `std/hashes`.
+##
+## This module is currently dependency-free (it imports nothing at all) and that
+## property is regression-guarded in CI by `tests/zerodep.nim`. It is intended as
+## a stable, low-footprint surface for embedded / portable consumers that only
+## need the color types and constructors.
+##
+## For the full parse / format / convert API (HTML color parsing, the CSS name
+## table, color-space conversions, blends, distance), use the umbrella module
+## `import chroma` instead — its behavior is unchanged by the existence of this
+## narrow surface.
+##
+## **Portability.** chroma is pure Nim with no `std/os`, file IO, SIMD, threads,
+## or `stdout`/`stderr` usage, which makes it a known-good portable target:
+## 32-bit ARM / ARMv6k devkitARM (e.g. the Nintendo 3DS) and other newlib
+## homebrew targets (PSP / Vita). On-device linking via newlib is verified by the
+## consuming project, not claimed here.
+##
+
 type
   Color* = object
     ## Main color type, float32 points
